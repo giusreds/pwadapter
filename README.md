@@ -133,7 +133,7 @@ Compile code with [Google Closure Compiler](https://closure-compiler.appspot.com
 
 ```
 // ==ClosureCompiler==
-// @compilation_level ADVANCED_OPTIMIZATIONS
+// @compilation_level SIMPLE_OPTIMIZATIONS
 // @output_file_name pwadapter.min.js
 // ==/ClosureCompiler==
 

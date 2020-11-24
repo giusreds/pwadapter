@@ -172,7 +172,7 @@
       .map(normalizeIcon)
       .sort((a, b) => b.largestSize - a.largestSize);
 
-    const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1)
+    const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1);
     const maskable = allIcons.filter((icon) => icon.purpose.indexOf('maskable') > -1);
     
     // Mod by Giuseppe Rossi
