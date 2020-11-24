@@ -123,7 +123,7 @@ For more information on the Web App Manifest, and how e.g., modern browsers will
 
 &copy; 2020 Giuseppe Rossi
 
-The license for this repository is a [GNU Affero General Public Licence version 3](LICENSE) (SPDX: AGPL-3.0). 
+The license for this repository is a [GNU Affero General Public License version 3](LICENSE) (SPDX: AGPL-3.0). 
 
 This project is based on [PWACompat](https://github.com/GoogleChromeLabs/pwacompat/) from Google Chrome Labs. Please see the [NOTICE](NOTICE) file for full reference.
 
