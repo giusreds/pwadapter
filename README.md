@@ -10,7 +10,7 @@ We recommend including it from CDN to get the latest version:
 <!-- Link your WebManifest -->
 <link rel="manifest" href="manifest.json" />
 <!-- Link the PWAdapter script -->
-<script async src="https://cdn.jsdelivr.net/gh/giusreds/pwadapter@main/pwadapter.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/gh/giusreds/pwadapter@dist/pwadapter.min.js"></script>
 ```
 
 And you're done! 🎉📄
