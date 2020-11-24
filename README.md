@@ -1,3 +1,5 @@
+[![](https://data.jsdelivr.com/v1/package/gh/giusreds/pwadapter/badge)](https://www.jsdelivr.com/package/gh/giusreds/pwadapter)
+
 PWAdapter is a library that brings the [Web App Manifest](https://developers.google.com/web/fundamentals/web-app-manifest/) to non-compliant browsers for better [Progressive Web Apps](https://en.wikipedia.org/wiki/Progressive_Web_Apps).
 This mostly means creating splash screens and icons for Mobile Safari, as well as supporting IE/Edge's Pinned Sites feature.
 
@@ -8,7 +10,7 @@ We recommend including it from CDN to get the latest version:
 <!-- Link your WebManifest -->
 <link rel="manifest" href="manifest.json" />
 <!-- Link the PWAdapter script -->
-<script async src="https://cdn.jsdelivr.net/gh/giusreds/pwadapter"></script>
+<script async src="https://cdn.jsdelivr.net/gh/giusreds/pwadapter@main/pwadapter.min.js"></script>
 ```
 
 And you're done! 🎉📄
@@ -132,7 +134,7 @@ Compile code with [Google Closure Compiler](https://closure-compiler.appspot.com
 ```
 // ==ClosureCompiler==
 // @compilation_level ADVANCED_OPTIMIZATIONS
-// @output_file_name PWAdapter.min.js
+// @output_file_name pwadapter.min.js
 // ==/ClosureCompiler==
 
 // code here
