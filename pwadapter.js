@@ -54,7 +54,7 @@
    * @return {string|undefined}
    */
   function store(k, v) {
-    const key = '__pwacompat_' + k;
+    const key = '__pwadapter_' + k;
     if (v !== undefined) {
       internalStorage[key] = v;
     }
@@ -75,7 +75,7 @@
         const data = /** @type {!Object<string, *>} */ (JSON.parse(storedResponse));
         process(data, hrefFactory);
       } catch (err) {
-        console.warn('PWACompat error', err);
+        console.warn('PWAdapter error', err);
       }
       return;
     }
@@ -93,7 +93,7 @@
         store('manifest', xhr.responseText);
         process(data, hrefFactory);
       } catch (err) {
-        console.warn('PWACompat error', err);
+        console.warn('PWAdapter error', err);
       }
     };
     xhr.send(null);
@@ -177,7 +177,7 @@
     
     // Mod by Giuseppe Rossi
 
-    const appleSplashIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
+    const transparentIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
       const attr = {'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
@@ -189,19 +189,19 @@
       if (icon.largestSize < appleIconSizeMin) {
         return;
       }
-      attr['rel'] = 'apple-touch-icon';
-      const nodo = document.createElement('link');
+      const node = document.createElement('link');
       for (const k in attr) {
-        nodo.setAttribute(k, attr[k]);
+        node.setAttribute(k, attr[k]);
       }
-      return nodo;
+      return node;
     }).filter(Boolean);
 
     // Fine Mod
 
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
-      const attr = {'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
+      //const attr = {'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
+      const attr = {'rel': 'apple-touch-icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
@@ -212,7 +212,7 @@
       if (icon.largestSize < appleIconSizeMin) {
         return;
       }
-      attr['rel'] = 'apple-touch-icon';
+      //attr['rel'] = 'apple-touch-icon';
 
       // nb. we used to call `removeAttribute('sizes')` here, which crashed iOS 8
       // ... sizes has been supported since iOS 4.2 (!)
@@ -310,7 +310,7 @@
 
       // Set the user-requested font; if it's invalid, the set will fail.
       const s = getComputedStyle(manifestEl);
-      ctx.font = s.getPropertyValue('--pwacompat-splash-font'); // blank for old browsers
+      ctx.font = s.getPropertyValue('--pwadapter-splash-font'); // blank for old browsers
 
       const title = manifest['name'] || manifest['short_name'] || document.title;
       const measure = ctx.measureText(title);
@@ -434,7 +434,7 @@
       /* Mod by Giuseppe Rossi
       const icon = appleTouchIcons.shift();
       */
-      const icon = appleSplashIcons.shift(); //Precedence on non-maskable icons
+      const icon = transparentIcons.shift(); //Precedence on non-maskable icons
       if (!icon) {
         renderBothSplash(null, saveUpdate);  // ran out of icons, render without one
         return;

@@ -1,10 +1,9 @@
-[![](https://data.jsdelivr.com/v1/package/gh/giusreds/pwadapter/badge)](https://www.jsdelivr.com/package/gh/giusreds/pwadapter)
 
 PWAdapter is a library that brings the [Web App Manifest](https://developers.google.com/web/fundamentals/web-app-manifest/) to non-compliant browsers for better [Progressive Web Apps](https://en.wikipedia.org/wiki/Progressive_Web_Apps).
 This mostly means creating splash screens and icons for Mobile Safari, as well as supporting IE/Edge's Pinned Sites feature.
 
 So, if you've created a `manifest.json` but want to have wide support everywhere else look no further.
-We recommend including it from CDN to get the latest version:
+We recommend including it from the JSDelivr CDN to get the latest version:
 
 ```html
 <!-- Link your WebManifest -->
@@ -36,14 +35,13 @@ You should also consider only loading PWAdapter after your site is loaded, as ad
 PWAdapter looks for a viewport tag which includes `viewport-fit=cover` or `viewport-fit=contain`, such as `<meta name="viewport" content="viewport-fit=cover">`.
 If this tag is detected, PWAdapter will generate a meta tag that makes your PWA load in fullscreen mode and with **black status bar** - this is particularly useful for devices with a notch.
 
-<!--
 You can customize the generated splash screen's font by using a CSS Variable.
 For example:
 
 ```html
 <style>
   link[rel="manifest"] {
-     --PWAdapter-splash-font: 24px Verdana;
+     --pwadapter-splash-font: 24px Verdana;
   }
 </style>
 ```
@@ -51,8 +49,7 @@ For example:
 This is set directly as a [canvas font](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font), so you must as a minimum include size _and_ family.
 The default value is "24px HelveticaNeue-CondensedBold".
 
-⚠️ PWAdapter won't wait for your fonts to load, so if you're using custom fonts, be sure to only load the library after they're ready.
--->
+⚠️ If you're using custom fonts, be sure to only load the library after they're ready.
 
 ### Old Versions
 
