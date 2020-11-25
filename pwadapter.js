@@ -177,19 +177,19 @@
 
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
-      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
-      // const attr = {'rel': 'apple-touch-icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
+      // const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
+      const attr = { 'rel': 'apple-touch-icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
+      // push('link', attr, '[rel="icon"]' + querySuffix);
       if (!isSafariMobile) {
         return;
       }
       if (icon.largestSize < appleIconSizeMin) {
         return;
       }
-      attr['rel'] = 'apple-touch-icon';
+      // attr['rel'] = 'apple-touch-icon';
 
       // nb. we used to call `removeAttribute('sizes')` here, which crashed iOS 8
       // ... sizes has been supported since iOS 4.2 (!)
@@ -204,17 +204,13 @@
       const querySuffix = `[sizes="${icon['sizes']}"]`;
       push('link', attr, '[rel="icon"]' + querySuffix);
       // Fine Mod
-      if (!isSafariMobile) {
-        return;
-      }
-      if (icon.largestSize < appleIconSizeMin) {
-        return;
-      }
-      const node = document.createElement('link');
-      for (const k in attr) {
-        node.setAttribute(k, attr[k]);
-      }
-      return node;
+      if (isSafariMobile) {
+        const node = document.createElement('link');
+        for (const k in attr) {
+          node.setAttribute(k, attr[k]);
+        }
+        return node;
+      } else return;
     }).filter(Boolean);
 
     // Fine Mod
