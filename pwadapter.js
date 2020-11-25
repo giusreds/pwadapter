@@ -493,11 +493,17 @@
     const themeIsLight = shouldUseLightForeground(color);
     if (isSafariMobile) {
       // nb. Safari 11.3+ gives a deprecation warning about this meta tag.
-      /* Mod Giuseppe Rossi
+
       const content = viewportFitCover ? 'black-translucent' : (themeIsLight ? 'black' : 'default');
       meta('apple-mobile-web-app-status-bar-style', content);
-      */
-      meta('apple-mobile-web-app-status-bar-style', 'black');
+      if(viewportFitCover) {
+        const topGradient = document.createElement('div');
+        const topGradientStyle = "background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));"
+              + "width: 100vw; height: env(safe-area-inset-top); min-height: 54 px;"
+              + "top: 0; left: 0; right: 0; display: float; z-index: 100;";
+        topGradient.style = topGradientStyle;
+      }
+      // meta('apple-mobile-web-app-status-bar-style', 'black');
     } else {
       // Edge PWA
       const t = getEdgeTitleBar();
