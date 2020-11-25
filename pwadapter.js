@@ -177,8 +177,12 @@
     
     // Mod by Giuseppe Rossi
 
-    const splashIco = (icons.length > 0 ? icons : maskable).map((icon) => {
+    const appleSplashIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
       const attr = {'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
+      // Mod by Giuseppe Rossi
+      const querySuffix = `[sizes="${icon['sizes']}"]`;
+      push('link', attr, '[rel="icon"]' + querySuffix);
+      // Fine Mod
       if (!isSafariMobile) {
         return;
       }
@@ -201,7 +205,7 @@
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
+      // push('link', attr, '[rel="icon"]' + querySuffix);
       if (!isSafariMobile) {
         return;
       }
@@ -430,7 +434,7 @@
       /* Mod by Giuseppe Rossi
       const icon = appleTouchIcons.shift();
       */
-      const icon = splashIco.shift(); //Precedence on non-maskable icons
+      const icon = appleSplashIcons.shift(); //Precedence on non-maskable icons
       if (!icon) {
         renderBothSplash(null, saveUpdate);  // ran out of icons, render without one
         return;
