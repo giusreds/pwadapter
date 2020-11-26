@@ -2,23 +2,23 @@
 
 'use strict';
 
-(function() {
+(function () {
 
   // Add gradient at top on iOS
-  
+
   try {
     window.sessionStorage.clear();
-  } catch { }
-
-  // basic feature detection: from IE10+
-  // also fallout on 'navigator.standalone', we _are_ an iOS PWA
-  if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
     if (navigator.standalone) {
       const topGradient = document.createElement('div');
       topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
       document.body.appendChild(topGradient);
     }
+  } catch { }
+
+  // basic feature detection: from IE10+
+  // also fallout on 'navigator.standalone', we _are_ an iOS PWA
+  if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
     return;
   }
 
@@ -195,7 +195,8 @@
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
+      if (isSafariMobile)
+        push('link', attr, '[rel="icon"]' + querySuffix);
       if (!isSafariMobile) {
         return;
       }
