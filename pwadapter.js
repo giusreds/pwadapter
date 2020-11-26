@@ -4,22 +4,19 @@
 
 (function () {
 
+  // Add gradient at top on iOS
+  try {
+    if (window.navigator.standalone) {
+      const topGradient = document.createElement('div');
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
+        "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
+      document.body.appendChild(topGradient);
+    }
+  } catch { }
+
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
   if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
-    try {
-      if (navigator.standalone) {
-        const topGradient = document.createElement('div');
-        topGradient.style.backgroundImage = "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))";
-        topGradient.style.width = "100vw";
-        topGradient.style.height = "env(safe-area-inset-top)";
-        topGradient.style.minHeight = "54px";
-        topGradient.style.display = "float";
-        topGradient.style.zIndex = "100";
-        topGradient.style.top = "0";
-        document.body.appendChild(topGradient);
-      }
-    } catch { }
     return;
   }
 
@@ -191,19 +188,19 @@
 
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
-      // const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
-      const attr = { 'rel': 'apple-touch-icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
+      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
+      // const attr = { 'rel': 'apple-touch-icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      // push('link', attr, '[rel="icon"]' + querySuffix);
       if (!isSafariMobile) {
         return;
       }
+      push('link', attr, '[rel="icon"]' + querySuffix);
       if (icon.largestSize < appleIconSizeMin) {
         return;
       }
-      // attr['rel'] = 'apple-touch-icon';
+      attr['rel'] = 'apple-touch-icon';
 
       // nb. we used to call `removeAttribute('sizes')` here, which crashed iOS 8
       // ... sizes has been supported since iOS 4.2 (!)
@@ -216,7 +213,8 @@
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
+      if (!isSafariMobile)
+        push('link', attr, '[rel="icon"]' + querySuffix);
       // Fine Mod
       if (isSafariMobile) {
         const node = document.createElement('link');
