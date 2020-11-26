@@ -1,8 +1,8 @@
 // (c) 2020 Giuseppe Rossi
 
-'use strict';
+// 'use strict';
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', () => {
 
   // Add gradient at top on iOS
   /*
