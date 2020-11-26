@@ -5,15 +5,13 @@
 (function () {
 
   // Add gradient at top on iOS
-  try {
-    sessionStorage.clear();
-    if (window.navigator.standalone) {
-      const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
-        "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
-      document.body.appendChild(topGradient);
-    }
-  } catch { }
+  sessionStorage.clear();
+  if (window.navigator.standalone) {
+    const topGradient = document.createElement('div');
+    topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
+      "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
+    document.body.appendChild(topGradient);
+  }
 
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
