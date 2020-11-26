@@ -1,23 +1,24 @@
 // (c) 2020 Giuseppe Rossi
 
-// 'use strict';
+'use strict';
 
 (function() {
 
   // Add gradient at top on iOS
   
   try {
-    if (navigator.standalone !== false) {
-      const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
-        "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
-      document.body.appendChild(topGradient);
-    }
+    window.sessionStorage.clear();
   } catch { }
 
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
   if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
+    if (navigator.standalone) {
+      const topGradient = document.createElement('div');
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
+        "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
+      document.body.appendChild(topGradient);
+    }
     return;
   }
 
