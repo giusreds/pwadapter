@@ -3,7 +3,26 @@
 'use strict';
 
 (function () {
-  
+
+  // basic feature detection: from IE10+
+  // also fallout on 'navigator.standalone', we _are_ an iOS PWA
+  if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
+    try {
+      if (navigator.standalone) {
+        const topGradient = document.createElement('div');
+        topGradient.style.backgroundImage = "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))";
+        topGradient.style.width = "100vw";
+        topGradient.style.height = "env(safe-area-inset-top)";
+        topGradient.style.minHeight = "54px";
+        topGradient.style.display = "float";
+        topGradient.style.zIndex = "100";
+        topGradient.style.top = "0";
+        document.body.appendChild(topGradient);
+      }
+    } catch { }
+    return;
+  }
+
   const debug = false;
 
   const capableDisplayModes = ['standalone', 'fullscreen', 'minimal-ui'];
@@ -14,26 +33,12 @@
   const minimumSplashIconSize = 48;
   const splashIconPadding = 20;
   const appleIconSizeMin = 120;
-  
+
   const userAgent = navigator.userAgent || '';
   const isSafari = (navigator.vendor && navigator.vendor.indexOf('Apple') !== -1);
   const isSafariMobile = isSafari && (userAgent.indexOf('Mobile/') !== -1 || 'standalone' in navigator) || debug;
   const isIEOrEdge = Boolean(userAgent.match(/(MSIE |Edge\/|Trident\/)/));
   const isEdgePWA = (typeof Windows !== 'undefined');
-
-  // basic feature detection: from IE10+
-  // also fallout on 'navigator.standalone', we _are_ an iOS PWA
-  if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
-    if(isSafariMobile && viewportFitCover) {
-      const topGradient = document.createElement('div');
-      const topGradientStyle = "background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));"
-            + "width: 100vw; height: env(safe-area-inset-top); min-height: 54 px;"
-            + "top: 0; left: 0; right: 0; display: float; z-index: 100;";
-      topGradient.style = topGradientStyle;
-      document.body.appendChild(topGradient);
-    }
-    return;
-  }
 
   let manifestEl;  // we need this later, not just for JSON
   let internalStorage;
