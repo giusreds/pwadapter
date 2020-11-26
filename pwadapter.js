@@ -2,10 +2,10 @@
 
 // 'use strict';
 
-window.addEventListener('load', function() {
+(function() {
 
   // Add gradient at top on iOS
-  /*
+  
   try {
     if (navigator.standalone !== false) {
       const topGradient = document.createElement('div');
@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
         "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
       document.body.appendChild(topGradient);
     }
-  } catch { }*/
+  } catch { }
 
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
@@ -609,4 +609,4 @@ window.addEventListener('load', function() {
   } else {
     window.addEventListener('load', setup);
   }
-});
+}());
