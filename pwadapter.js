@@ -4,11 +4,11 @@
 
 (function () {
 
-  // Add gradient at top on iOS
+  const debug = false;
 
+  // Add gradient at top on iOS
   try {
-    window.sessionStorage.clear();
-    if (navigator.standalone === true) {
+    if (navigator.standalone === true || debug) {
       const topGradient = document.createElement('div');
       topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 10px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
@@ -21,8 +21,6 @@
   if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
     return;
   }
-
-  const debug = false;
 
   const capableDisplayModes = ['standalone', 'fullscreen', 'minimal-ui'];
   const defaultSplashColor = '#f8f9fa';
@@ -82,16 +80,20 @@
     }
 
     const hrefFactory = buildHrefFactory([manifestHref, location]);
+
+    // TEST not reading in Storage
+    /*
     const storedResponse = store('manifest');
     if (storedResponse) {
       try {
-        const data = /** @type {!Object<string, *>} */ (JSON.parse(storedResponse));
+        const data = (JSON.parse(storedResponse));
         process(data, hrefFactory);
       } catch (err) {
         console.warn('PWAdapter error', err);
       }
       return;
     }
+    */
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', manifestHref);
@@ -195,9 +197,9 @@
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      if (isSafariMobile)
+      if (isSafariMobile) {
         push('link', attr, '[rel="icon"]' + querySuffix);
-      if (!isSafariMobile) {
+      } else {
         return;
       }
       if (icon.largestSize < appleIconSizeMin) {
@@ -216,15 +218,16 @@
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      if (!isSafariMobile)
+      if (!isSafariMobile) {
         push('link', attr, '[rel="icon"]' + querySuffix);
-      if (isSafariMobile) {
+        return;
+      } else {
         const node = document.createElement('link');
         for (const k in attr) {
           node.setAttribute(k, attr[k]);
         }
         return node;
-      } else return;
+      }
     }).filter(Boolean);
 
     // Fine Mod
@@ -371,7 +374,8 @@
     }
 
     // fetch previous (session) iOS image updates
-    const rendered = store('iOS');
+    // TEST not reading in storage
+    /* const rendered = store('iOS'); */
     if (!debug && rendered) {
       try {
         const prev = /** @type {!Object<string, string>} */ (JSON.parse(rendered));
