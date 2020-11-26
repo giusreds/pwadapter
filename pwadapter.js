@@ -213,15 +213,17 @@
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
-      // Fine Mod
-      if (isSafariMobile) {
+      if (!isSafariMobile) {
+        push('link', attr, '[rel="icon"]' + querySuffix);
+        return;
+        // Fine Mod
+      } else {
         const node = document.createElement('link');
         for (const k in attr) {
           node.setAttribute(k, attr[k]);
         }
         return node;
-      } else return;
+      }
     }).filter(Boolean);
 
     // Fine Mod
