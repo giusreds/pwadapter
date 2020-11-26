@@ -194,10 +194,10 @@
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
+      push('link', attr, '[rel="icon"]' + querySuffix);
       if (!isSafariMobile) {
         return;
       }
-      push('link', attr, '[rel="icon"]' + querySuffix);
       if (icon.largestSize < appleIconSizeMin) {
         return;
       }
