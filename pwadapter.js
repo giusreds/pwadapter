@@ -5,7 +5,6 @@
 (function () {
 
   // Add gradient at top on iOS
-  sessionStorage.clear();
   if (navigator.standalone !== false) {
     const topGradient = document.createElement('div');
     topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
