@@ -213,8 +213,7 @@
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      if (!isSafariMobile)
-        push('link', attr, '[rel="icon"]' + querySuffix);
+      push('link', attr, '[rel="icon"]' + querySuffix);
       // Fine Mod
       if (isSafariMobile) {
         const node = document.createElement('link');
