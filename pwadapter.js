@@ -10,8 +10,8 @@
     window.sessionStorage.clear();
     if (navigator.standalone === true) {
       const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3592787456779587) 50%, rgba(0,0,0,0.06235997817095584) 75%, rgba(0,0,0,0) 100%);" +
-        "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
+      topGradient.style.cssText = "background-image: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0) 100%);" +
+        "width: 100%; height: env(safe-area-inset-top); min-height: 26px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
       document.body.appendChild(topGradient);
     }
   } catch { }
