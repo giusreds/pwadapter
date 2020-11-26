@@ -2,7 +2,7 @@
 
 'use strict';
 
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
   // Add gradient at top on iOS
   /*
@@ -609,4 +609,4 @@
   } else {
     window.addEventListener('load', setup);
   }
-}());
+});
