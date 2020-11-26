@@ -2,7 +2,7 @@
 
 // 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', function() {
 
   // Add gradient at top on iOS
   /*
