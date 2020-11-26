@@ -8,9 +8,9 @@
 
   try {
     window.sessionStorage.clear();
-    if (navigator.standalone) {
+    if (navigator.standalone === true) {
       const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));" +
+      topGradient.style.cssText = "background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3592787456779587) 50%, rgba(0,0,0,0.06235997817095584) 75%, rgba(0,0,0,0) 100%);" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 44px; position: fixed; top: 0; z-index: 100000000;";
       document.body.appendChild(topGradient);
     }
