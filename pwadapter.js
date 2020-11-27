@@ -198,6 +198,7 @@
         push('link', attr, '[rel="icon"]' + querySuffix);
         return;
       }
+      attr['rel'] = 'apple-touch-icon';
       const node = document.createElement('link');
       for (const k in attr) {
         node.setAttribute(k, attr[k]);
