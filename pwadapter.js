@@ -8,13 +8,17 @@
 
   // Add gradient at top on iOS
   try {
-    if (navigator.standalone === true || debug) {
+    // if i'm on Safari and i'm fullscreen, then show gradient under status bar
+    const wH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const minimumSBSize = 20;  // 20px is the minimum status bar size on iOS in devices without notch
+    const isSafariPwaFullScreen = (navigator.standalone === true) && (screen.height - wH < minimumSBSize);
+    if (isSafariPwaFullScreen || debug) {
       const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(30,30,30,0.8), rgba(30,30,30,0));" +
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 20px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
       document.body.appendChild(topGradient);
     }
-  } catch { }
+  } catch(e) { }
 
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
