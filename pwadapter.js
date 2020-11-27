@@ -509,8 +509,8 @@
       // nb. Safari 11.3+ gives a deprecation warning about this meta tag.
 
       const content = viewportFitCover ? 'black-translucent' : (themeIsLight ? 'black' : 'default');
-      meta('apple-mobile-web-app-status-bar-style', content);
-      // meta('apple-mobile-web-app-status-bar-style', 'black');
+      // meta('apple-mobile-web-app-status-bar-style', content);
+      meta('apple-mobile-web-app-status-bar-style', 'black-translucent');
     } else {
       // Edge PWA
       const t = getEdgeTitleBar();
