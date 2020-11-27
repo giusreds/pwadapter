@@ -10,7 +10,7 @@
   try {
     if (navigator.standalone === true || debug) {
       const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));" +
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(30,30,30,0.8), rgba(30,30,30,0));" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 20px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
       document.body.appendChild(topGradient);
     }
@@ -41,6 +41,7 @@
   let internalStorage;
   try {
     internalStorage = sessionStorage;
+    internalStorage.clear();
   } catch (e) { }
   internalStorage = internalStorage || {};
 
@@ -81,8 +82,6 @@
 
     const hrefFactory = buildHrefFactory([manifestHref, location]);
 
-    // TEST not reading in Storage
-    /*
     const storedResponse = store('manifest');
     if (storedResponse) {
       try {
@@ -93,7 +92,6 @@
       }
       return;
     }
-    */
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', manifestHref);
@@ -190,6 +188,25 @@
     const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1);
     const maskable = allIcons.filter((icon) => icon.purpose.indexOf('maskable') > -1);
 
+    // Mod by Giuseppe Rossi
+
+    const transparentIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
+      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
+      // Mod by Giuseppe Rossi
+      const querySuffix = `[sizes="${icon['sizes']}"]`;
+      // if (!isSafariMobile)
+      push('link', attr, '[rel="icon"]' + querySuffix);
+      if (isSafariMobile) {
+        const node = document.createElement('link');
+        for (const k in attr) {
+          node.setAttribute(k, attr[k]);
+        }
+        return node;
+      } else return;
+    }).filter(Boolean);
+
+    // Fine Mod
+
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
@@ -211,26 +228,6 @@
       // ... sizes has been supported since iOS 4.2 (!)
       return push('link', attr, '[rel="apple-touch-icon"]' + querySuffix);
     }).filter(Boolean);
-
-    // Mod by Giuseppe Rossi
-
-    const transparentIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
-      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
-      // Mod by Giuseppe Rossi
-      const querySuffix = `[sizes="${icon['sizes']}"]`;
-      if (!isSafariMobile) {
-        push('link', attr, '[rel="icon"]' + querySuffix);
-        return;
-      } else {
-        const node = document.createElement('link');
-        for (const k in attr) {
-          node.setAttribute(k, attr[k]);
-        }
-        return node;
-      }
-    }).filter(Boolean);
-
-    // Fine Mod
 
     // nb. only for iOS, but watch for future CSS rule `@viewport { viewport-fit: cover; }`
     const metaViewport = getElementInHead('meta[name="viewport"]');
@@ -374,8 +371,7 @@
     }
 
     // fetch previous (session) iOS image updates
-    // TEST not reading in storage
-    /* const rendered = store('iOS'); */
+    const rendered = store('iOS');
     if (!debug && rendered) {
       try {
         const prev = /** @type {!Object<string, string>} */ (JSON.parse(rendered));
