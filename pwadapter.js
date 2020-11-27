@@ -216,7 +216,12 @@
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
-      return push('link', attr, '[rel="icon"]' + querySuffix);
+      push('link', attr, '[rel="icon"]' + querySuffix);
+      const node = document.createElement('link');
+      for (const k in attr) {
+        node.setAttribute(k, attr[k]);
+      }
+      return node;
     }).filter(Boolean);
 
     // Fine Mod
