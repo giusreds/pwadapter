@@ -188,6 +188,25 @@
     const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1);
     const maskable = allIcons.filter((icon) => icon.purpose.indexOf('maskable') > -1);
 
+    // Mod by Giuseppe Rossi
+
+    const transparentIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
+      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
+      // Mod by Giuseppe Rossi
+      const querySuffix = `[sizes="${icon['sizes']}"]`;
+      if (!isSafariMobile)
+        push('link', attr, '[rel="icon"]' + querySuffix);
+
+      attr['rel'] = 'apple-touch-icon';
+      const node = document.createElement('link');
+      for (const k in attr) {
+        node.setAttribute(k, attr[k]);
+      }
+      return node;
+    }).filter(Boolean);
+
+    // Fine Mod
+
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
       const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
@@ -209,24 +228,6 @@
       // ... sizes has been supported since iOS 4.2 (!)
       return push('link', attr, '[rel="apple-touch-icon"]' + querySuffix);
     }).filter(Boolean);
-
-    // Mod by Giuseppe Rossi
-
-    const transparentIcons = (icons.length > 0 ? icons : maskable).map((icon) => {
-      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
-      // Mod by Giuseppe Rossi
-      const querySuffix = `[sizes="${icon['sizes']}"]`;
-      push('link', attr, '[rel="icon"]' + querySuffix);
-      
-      attr['rel'] = 'apple-touch-icon';
-      const node = document.createElement('link');
-      for (const k in attr) {
-        node.setAttribute(k, attr[k]);
-      }
-      return node;
-    }).filter(Boolean);
-
-    // Fine Mod
 
     // nb. only for iOS, but watch for future CSS rule `@viewport { viewport-fit: cover; }`
     const metaViewport = getElementInHead('meta[name="viewport"]');
