@@ -217,6 +217,8 @@
       // Mod by Giuseppe Rossi
       const querySuffix = `[sizes="${icon['sizes']}"]`;
       push('link', attr, '[rel="icon"]' + querySuffix);
+      
+      attr['rel'] = 'apple-touch-icon';
       const node = document.createElement('link');
       for (const k in attr) {
         node.setAttribute(k, attr[k]);
