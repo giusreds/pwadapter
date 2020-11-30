@@ -6,23 +6,15 @@
 
   const debug = false;
 
-  function addGradient() {
+  // if i'm on Safari and i'm fullscreen, then show gradient under the status bar
+  if (navigator.standalone === true || debug) {
     try {
-      // if i'm on Safari and i'm fullscreen, then show gradient under the status bar
-      if (navigator.standalone === true || debug) {
-        const topGradient = document.createElement('div');
-        topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));" +
-          "width: 100%; height: env(safe-area-inset-top); min-height: 20px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
-        document.body.appendChild(topGradient);
-      }
+      const topGradient = document.createElement('div');
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));" +
+        "width: 100%; height: env(safe-area-inset-top); min-height: 20px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
+      document.body.appendChild(topGradient);
     } catch (e) { }
   }
-  if (document.readyState === 'complete')
-    addGradient();
-  else
-    document.addEventListener('DOMContentLoaded', addGradient);
-
-
 
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
