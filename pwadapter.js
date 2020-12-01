@@ -10,7 +10,7 @@
   if (navigator.standalone === true || debug) {
     try {
       const topGradient = document.createElement('div');
-      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));" +
+      topGradient.style.cssText = "background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));" +
         "width: 100%; height: env(safe-area-inset-top); min-height: 20px; position: fixed; top: 0; z-index: 100000000; pointer-events: none;";
       document.body.appendChild(topGradient);
     } catch (e) { }
